@@ -1,6 +1,23 @@
-
+from dataclasses import dataclass
+import logging
+from multiprocessing import Queue
 import time
 import RPi.GPIO as GPIO
+
+
+pump_task_queue = Queue()
+
+
+@dataclass
+class PumpTask:
+    duration_s: float
+
+
+def pump_worker(input_queue: Queue):
+    with PumpController(duty_cycle=75) as pump:
+        for task in iter(input_queue.get, "STOP"):
+            pump.run(duration_s=task.duration_s)
+
 
 class PumpController:
     ''' Class providing all functionalities to controll the water pump.
@@ -32,13 +49,13 @@ class PumpController:
         GPIO.cleanup()
 
     def	set_motor(self, M1, M2):
-        print("Motor set")
         GPIO.output(self._PIN_M1, M1)
         GPIO.output(self._PIN_M2, M2)
 	
     def run(self, duration_s: float):
+        logging.info(f"Starting pump for {duration_s} s.")
         self.pump.start(self.pwm_duty_cycle)
         self.set_motor(GPIO.HIGH, GPIO.LOW)
         time.sleep(duration_s)
         self.pump.stop()
-        
+        logging.info("Pump stopped.")
