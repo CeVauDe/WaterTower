@@ -14,16 +14,15 @@ def flask_main():
     return "<h1>Flask is running</h1><p>Awesome, that worked.  Now add more code.</p>"
 
 @app.route("/run-pump")
-def run_pump_manual():
-    # run_time = request.args.get('duration', 10)
-    run_time = 1
-    print(f"Called with duration {run_time}")
+def run_pump():
+    duration_s = int(request.args.get('duration', 2))
+    print(f"Called with duration {duration_s}")
     
     
     with PumpController() as pump:
-        pump.run(duration_s=2)
+        pump.run(duration_s=duration_s)
 
-    return f"<h1>Pump was running for {run_time} s</h1><p>Awesome, that worked.</p>"
+    return f"<h1>Pump was running for {duration_s} s</h1><p>Awesome, that worked.</p>"
 
 
 def main():
