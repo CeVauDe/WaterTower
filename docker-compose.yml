@@ -1,0 +1,7 @@
+services:
+  watertower:
+    image: watertower:latest
+    ports:
+      - 80:8080
+    devices:
+      - /dev/gpiomem:/dev/gpiomem
