@@ -4,15 +4,24 @@ import schedule
 from src.pump_controller.pump_controller import PumpTask, pump_task_queue
 
 
-default_pump_task = PumpTask(duration_s=10)
+default_pump_task = PumpTask(duration_s=35)
 
 pump_scheduler = schedule.Scheduler()
-pump_scheduler.every().minute.do(pump_task_queue.put, default_pump_task)
-# pump_scheduler.every().day.at("12:09").do(pump_task_queue.put, default_pump_task)
-# pump_scheduler.every().day.at("12:10").do(pump_task_queue.put, default_pump_task)
-# pump_scheduler.every().day.at("12:11").do(pump_task_queue.put, default_pump_task)
-# pump_scheduler.every().day.at("12:12").do(pump_task_queue.put, default_pump_task)
-# pump_scheduler.every().day.at("12:13").do(pump_task_queue.put, default_pump_task)
+# pump_scheduler.every(30).seconds.do(pump_task_queue.put, default_pump_task)
+pump_scheduler.every().day.at("06:00").do(pump_task_queue.put, default_pump_task)
+pump_scheduler.every().day.at("07:00").do(pump_task_queue.put, default_pump_task)
+pump_scheduler.every().day.at("08:00").do(pump_task_queue.put, default_pump_task)
+pump_scheduler.every().day.at("10:00").do(pump_task_queue.put, default_pump_task)
+pump_scheduler.every().day.at("12:00").do(pump_task_queue.put, default_pump_task)
+pump_scheduler.every().day.at("13:00").do(pump_task_queue.put, default_pump_task)
+pump_scheduler.every().day.at("14:00").do(pump_task_queue.put, default_pump_task)
+pump_scheduler.every().day.at("15:00").do(pump_task_queue.put, default_pump_task)
+pump_scheduler.every().day.at("16:00").do(pump_task_queue.put, default_pump_task)
+pump_scheduler.every().day.at("17:00").do(pump_task_queue.put, default_pump_task)
+pump_scheduler.every().day.at("18:00").do(pump_task_queue.put, default_pump_task)
+pump_scheduler.every().day.at("20:00").do(pump_task_queue.put, default_pump_task)
+pump_scheduler.every().day.at("22:00").do(pump_task_queue.put, default_pump_task)
+
 
 def run_continuously(interval=1):
     """Continuously run, while executing pending jobs at each
